@@ -13,7 +13,7 @@ typedef struct
 typedef struct
 {
     char id[10];
-    char nom[20];
+    char nom[30];
     char prenom[30];
     int numeroMaillot;
     char poste[15];
@@ -327,9 +327,39 @@ void AffichagePoste(){
     }
 }
 
+// recherche par Id
+int RechercheId(char idRecherche[10]){
+    for (int i = 0; i < totalJoueur; i++)
+    {
+        if (strcmp(idRecherche, equipe[i].id) == 0)
+        {
+            return i;
+        }      
+    }
+    return -1;
+}
+
+
+// recherche par nom
+int RechercheNom(char nomRecherche[30]){
+    for (int i = 0; i < totalJoueur; i++)
+    {
+        if (strcmp(nomRecherche, equipe[i].nom) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int main(){
     int choix, numAjoute;
     int choixAffichage;
+    int choixRecherche;
+    char idRecherche[10];
+    int returnId;
+    char nomRecherche[30];
+    int returnNom;
 
     
     do
@@ -338,7 +368,7 @@ int main(){
         printf("2. Afficher la liste de tous les joueurs :\n");
         // printf("3. Modifier un joueur :\n");
         // printf("4. Supprimer un joueur :\n");
-        // printf("5. Rechercher un joueur :\n");
+        printf("5. Rechercher un joueur :\n");
         // printf("6. Afficher les statistiques :\n");
         // printf("7. Quitter :\n");
 
@@ -404,7 +434,44 @@ int main(){
                 break;
 
             case 5:
+                do
+                {
+                    printf("Voulez vous chercher par identifiant ou par nom?\n");
+                    printf("1. Rechercher un joueur par Identifiant.\n");
+                    printf("2. Rechercher un joueur par nom.\n");
+                    printf("0. Retourner au menu principale.\n");
+                    scanf("%d", &choixRecherche);
 
+                    if (choixRecherche == 1)
+                    {
+                        printf("Donnez l'identifiant du joueur: ");
+                        scanf("%s", idRecherche);
+                        returnId = RechercheId(idRecherche);
+
+                        if (returnId == -1)
+                        {
+                            printf("Aucun joueur avec ce identifiant.");
+                        } else
+                        {
+                            Afficher1Joueur(returnId);
+                        }
+                    } else if (choixRecherche == 2)
+                    {
+                        printf("Donnez le nom du joueur: ");
+                        scanf("%s", nomRecherche);
+                        returnNom = RechercheNom(nomRecherche);
+
+                        if (returnNom == -1)
+                        {
+                            printf("Aucun joueur avec ce nom.");
+                        } else
+                        {
+                            Afficher1Joueur(returnNom);
+                        }
+                    }
+                    
+                } while (choixRecherche != 0);
+                
                 break;
 
             case 6:
