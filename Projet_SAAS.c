@@ -25,9 +25,20 @@ typedef struct
 
 /*(Variables globales)__________________________________________________________________________________*/
 
-joueur equipe[100];
+joueur equipe[100] = {
+    {"SA0001", "Yamal", "Lamine", 19, "Attaquant", 17, 10, {2023, "Avril", 29}, "Tutilaire"},
+    {"SA0002", "Kounde", "Jules", 23, "Defenseur", 26, 5, {2022, "Juillet", 29}, "Tutilaire"},
+    {"SA0003", "Cubarsi", "Pau", 2, "Defenseur", 17, 1, {2023, "Mars", 10}, "Tutilaire"},
+    {"SA0004", "Araujo", "Ronald", 4, "Defenseur", 25, 8, {2019, "Août", 6}, "Tutilaire"},
+    {"SA0005", "Pedri", "Gonzalez", 8, "Milieu", 22, 20, {2020, "Août", 14}, "Tutilaire"},
+    {"SA0006", "Rashford", "Marcus", 10, "Attaquant", 27, 120, {2016, "Février", 25}, "Tutilaire"},
+    {"SA0007", "Lewandowski", "Robert", 9, "Attaquant", 36, 550, {2022, "Juillet", 17}, "Tutilaire"},
+    {"SA0008", "Gavi", "Pablo", 6, "Milieu", 20, 15, {2021, "Août", 29}, "Blessé"},
+    {"SA0009", "Martin", "Fermin", 16, "Milieu", 22, 12, {2023, "Août", 12}, "Tutilaire"},
+    {"SA0010", "Raphinha", "Dias", 11, "Ailier", 28, 50, {2022, "Juillet", 13}, "Remplacant"}
+};
 
-int totalJoueur = 0;
+int totalJoueur = 10;
 int compteurId = 1;
 
 /*(Fonctions)___________________________________________________________________________________________*/
@@ -266,6 +277,24 @@ void TrierAge(){
     }
 }
 
+// fonction de tri par buts
+void TrierBut(){
+    int i, j, key;
+
+    for (i = 1; i < totalJoueur; i++)
+    {
+        joueur key = equipe[i];
+        j = i - 1;
+
+        while (j >= 0 && equipe[j].buts > key.buts)
+        {
+            equipe[j + 1] = equipe[j];
+            j--;
+        }
+        equipe[j + 1] = key;
+    }
+}
+
 // fonction de tri les joueurs par alphabet
 void TrierAlphabet(){
     int i, j, key;
@@ -396,12 +425,14 @@ void Supprimer(int returnId){
 
 int main(){
     int choix, numAjoute;
-    int choixAffichage, choixRecherche, choixModification, choixPoste;;
-    char idRecherche[10], nomRecherche[30];
+    int choixAffichage, choixRecherche, choixModification, choixPoste, choixStatistique;
+    char idRecherche[10], nomRecherche[30], nouveauPoste[15];
     int returnId, returnNom;
-    char nouveauPoste[15];
     int nouveaubuts, nouveauAge;
     int confSupp;
+    int sommeAge = 0;
+    float moyenAge;
+    int nombreBut;
     
     do
     {
@@ -410,7 +441,7 @@ int main(){
         printf("3. Modifier un joueur :\n");
         printf("4. Supprimer un joueur :\n");
         printf("5. Rechercher un joueur :\n");
-        // printf("6. Afficher les statistiques :\n");
+        printf("6. Afficher les statistiques :\n");
         printf("7. Quitter :\n");
 
         printf("Donnez votre choix: ");
@@ -587,6 +618,62 @@ int main(){
                 break;
 
             case 6:
+                printf("1. Afficher le nombre total de joueurs dans l'équipe.\n");
+                printf("2. Afficher l'âge moyen des joueurs.\n");
+                printf("3. Afficher les joueurs ayant marqué plus de X buts\n");
+                printf("4. Afficher le meilleur buteur\n");
+                printf("5. Afficher le joueur le plus jeune et le plus âgé.\n");
+                printf("0. Quitter\n");
+
+                printf("Donnez votre choix: ");
+                scanf("%d", &choixStatistique);
+
+                switch (choixStatistique)
+                {
+                    case 1:
+                        printf("Le nombre total des joueurs dans l'equipe est: %d.\n", totalJoueur);
+                        break;
+                    case 2:
+                        for (int i = 0; i < totalJoueur; i++)
+                        {
+                            sommeAge = sommeAge + equipe[i].age;
+                        }
+
+                        moyenAge = sommeAge / totalJoueur;
+
+                        printf("L'age moyen des joueurs est: %1.f", moyenAge);
+                        break;
+                    case 3:
+                        printf("Donnez le nombre minimum de but: ");
+                        scanf("%d", &nombreBut);
+
+                        for (int i = 0; i < totalJoueur; i++)
+                        {
+                            if (nombreBut <= equipe[i].buts)
+                            {
+                                Afficher1Joueur(i);
+                            }
+                        }
+                        break;
+                    case 4:
+                        TrierBut();
+
+                        printf("Le meilleur buteur de cet equipe est: \n");
+                        Afficher1Joueur(totalJoueur - 1);
+                        break;
+                    case 5:
+                        TrierAge();
+
+                        printf("Le joueur le plus age est: \n");
+                        Afficher1Joueur(totalJoueur - 1);
+
+                        printf("Le joueur le plus jeune est: \n");
+                        Afficher1Joueur(0);
+                        break;
+                    case 0:
+
+                        break;
+                }
                 
                 break;
             
