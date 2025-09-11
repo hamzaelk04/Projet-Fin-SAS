@@ -29,17 +29,17 @@ joueur equipe[100] = {
     {"SA0001", "Yamal", "Lamine", 19, "Attaquant", 17, 10, {2023, "Avril", 29}, "Tutilaire"},
     {"SA0002", "Kounde", "Jules", 23, "Defenseur", 26, 5, {2022, "Juillet", 29}, "Tutilaire"},
     {"SA0003", "Cubarsi", "Pau", 2, "Defenseur", 17, 1, {2023, "Mars", 10}, "Tutilaire"},
-    {"SA0004", "Araujo", "Ronald", 4, "Defenseur", 25, 8, {2019, "Août", 6}, "Tutilaire"},
-    {"SA0005", "Pedri", "Gonzalez", 8, "Milieu", 22, 20, {2020, "Août", 14}, "Tutilaire"},
-    {"SA0006", "Rashford", "Marcus", 10, "Attaquant", 27, 120, {2016, "Février", 25}, "Tutilaire"},
+    {"SA0004", "Araujo", "Ronald", 4, "Defenseur", 25, 8, {2019, "Aout", 6}, "Tutilaire"},
+    {"SA0005", "Pedri", "Gonzalez", 8, "Milieu", 22, 20, {2020, "Aout", 14}, "Tutilaire"},
+    {"SA0006", "Rashford", "Marcus", 10, "Attaquant", 27, 120, {2016, "Fevrier", 25}, "Tutilaire"},
     {"SA0007", "Lewandowski", "Robert", 9, "Attaquant", 36, 550, {2022, "Juillet", 17}, "Tutilaire"},
-    {"SA0008", "Gavi", "Pablo", 6, "Milieu", 20, 15, {2021, "Août", 29}, "Blessé"},
-    {"SA0009", "Martin", "Fermin", 16, "Milieu", 22, 12, {2023, "Août", 12}, "Tutilaire"},
+    {"SA0008", "Gavi", "Pablo", 6, "Milieu", 20, 15, {2021, "Aout", 29}, "remplacant"},
+    {"SA0009", "Lopez", "Fermin", 16, "Milieu", 22, 12, {2023, "Aout", 12}, "Tutilaire"},
     {"SA0010", "Raphinha", "Dias", 11, "Ailier", 28, 50, {2022, "Juillet", 13}, "Remplacant"}
 };
 
 int totalJoueur = 10;
-int compteurId = 1;
+int compteurId = 10;
 
 /*(Fonctions)___________________________________________________________________________________________*/
 
@@ -246,17 +246,29 @@ void Ajouter(int n){
 void Afficher(){
     for (int i = 0; i < totalJoueur; i++)
     {
-        printf("Id: %s, Nom et prenom du joueur: %s %s\n ", equipe[i].id, equipe[i].nom, equipe[i].prenom);
-        printf("Age: %d, numeroMaillot: %d, poste: %s\n", equipe[i].age, equipe[i].numeroMaillot, equipe[i].poste);
+        printf("---------------------------------------------\n");
+        printf("---------------------------------------------\n");
+        printf("Identifiant du joueur: %s\n", equipe[i].id);
+        printf("Nom et prenom: %s %s\n", equipe[i].nom, equipe[i].prenom);
+        printf("Age du joueur: %d\n", equipe[i].age);
+        printf("NumeroMaillot: %d, poste: %s\n", equipe[i].numeroMaillot, equipe[i].poste);
         printf("DateInscription: %d/%s/%d, statut: %s\n", equipe[i].dateInsciption.jour, equipe[i].dateInsciption.mois, equipe[i].dateInsciption.annee, equipe[i].statut);
+        printf("---------------------------------------------\n");
+        printf("---------------------------------------------\n");
     }
 }
 
 //fonction d'afficher juste un joueur
 void Afficher1Joueur(int i){
-    printf("Id: %s, Nom et prenom du joueur: %s %s\n ", equipe[i].id, equipe[i].nom, equipe[i].prenom);
-    printf("Age: %d, numeroMaillot: %d, poste: %s\n", equipe[i].age, equipe[i].numeroMaillot, equipe[i].poste);
+    printf("---------------------------------------------\n");
+    printf("---------------------------------------------\n");
+    printf("Identifiant du joueur: %s\n", equipe[i].id);
+    printf("Nom et prenom: %s %s\n", equipe[i].nom, equipe[i].prenom);
+    printf("Age du joueur: %d\n", equipe[i].age);
+    printf("NumeroMaillot: %d, poste: %s\n", equipe[i].numeroMaillot, equipe[i].poste);
     printf("DateInscription: %d/%s/%d, statut: %s\n", equipe[i].dateInsciption.jour, equipe[i].dateInsciption.mois, equipe[i].dateInsciption.annee, equipe[i].statut);
+    printf("---------------------------------------------\n");
+    printf("---------------------------------------------\n");
 }
 
 // fonction de tri l'age
@@ -431,7 +443,7 @@ int main(){
     int nouveaubuts, nouveauAge;
     int confSupp;
     int sommeAge = 0;
-    float moyenAge;
+    float moyenAge = 0;
     int nombreBut;
     
     do
@@ -509,7 +521,7 @@ int main(){
                 {
                     printf("1. Modifier le poste du %s\n", equipe[returnId].nom);
                     printf("2. Modifier l'age du %s\n", equipe[returnId].nom);
-                    printf("3. Modifier le nombre de buts marqués par %s\n", equipe[returnId].nom);
+                    printf("3. Modifier le nombre de buts marques par %s\n", equipe[returnId].nom);
                     printf("0. Retourner au menu principale\n");
 
                     printf("Donnez votre choix: ");
@@ -618,9 +630,9 @@ int main(){
                 break;
 
             case 6:
-                printf("1. Afficher le nombre total de joueurs dans l'équipe.\n");
-                printf("2. Afficher l'âge moyen des joueurs.\n");
-                printf("3. Afficher les joueurs ayant marqué plus de X buts\n");
+                printf("1. Afficher le nombre total de joueurs dans l'equipe.\n");
+                printf("2. Afficher l'age moyen des joueurs.\n");
+                printf("3. Afficher les joueurs ayant marque plus de certains buts\n");
                 printf("4. Afficher le meilleur buteur\n");
                 printf("5. Afficher le joueur le plus jeune et le plus âgé.\n");
                 printf("0. Quitter\n");
@@ -641,7 +653,7 @@ int main(){
 
                         moyenAge = sommeAge / totalJoueur;
 
-                        printf("L'age moyen des joueurs est: %1.f", moyenAge);
+                        printf("L'age moyen des joueurs est: %.1f", moyenAge);
                         break;
                     case 3:
                         printf("Donnez le nombre minimum de but: ");
