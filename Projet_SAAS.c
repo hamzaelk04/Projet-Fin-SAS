@@ -352,25 +352,66 @@ int RechercheNom(char nomRecherche[30]){
     return -1;
 }
 
+// sous fonction de modification du poste
+void NouveauPoste(int choixPoste, int returnId){
+    int validChoix = 0;
+
+    while (validChoix == 0)
+    {
+        switch (choixPoste){
+        case 1:
+            strcpy (equipe[returnId].poste, "Gardien");
+            validChoix = 1;
+            break;
+        case 2:
+            strcpy (equipe[returnId].poste, "Defenseur");
+            validChoix = 1;
+            break;
+        case 3:
+            strcpy (equipe[returnId].poste, "Milieu");
+            validChoix = 1;
+            break;
+        case 4:
+            strcpy (equipe[returnId].poste, "Attaquant");
+            validChoix = 1;
+            break;
+        default:
+            printf("Choix invalid\n");
+            printf("Donnez un autre nombre: ");
+            scanf("%d", &choixPoste);
+            getchar();
+            break;
+        }
+    }
+}
+
+// fonction de suppression
+void Supprimer(int returnId){
+    for (int i = returnId; i < totalJoueur - 1; i++)
+    {
+        equipe[i] = equipe[i + 1];
+    }
+    totalJoueur--;
+}
+
 int main(){
     int choix, numAjoute;
-    int choixAffichage;
-    int choixRecherche;
-    char idRecherche[10];
-    int returnId;
-    char nomRecherche[30];
-    int returnNom;
-
+    int choixAffichage, choixRecherche, choixModification, choixPoste;;
+    char idRecherche[10], nomRecherche[30];
+    int returnId, returnNom;
+    char nouveauPoste[15];
+    int nouveaubuts, nouveauAge;
+    int confSupp;
     
     do
     {
         printf("1. Ajouter un joueur :\n");
         printf("2. Afficher la liste de tous les joueurs :\n");
-        // printf("3. Modifier un joueur :\n");
-        // printf("4. Supprimer un joueur :\n");
+        printf("3. Modifier un joueur :\n");
+        printf("4. Supprimer un joueur :\n");
         printf("5. Rechercher un joueur :\n");
         // printf("6. Afficher les statistiques :\n");
-        // printf("7. Quitter :\n");
+        printf("7. Quitter :\n");
 
         printf("Donnez votre choix: ");
         scanf("%d", &choix);
@@ -426,10 +467,81 @@ int main(){
                 break;
 
             case 3:
+                printf("Donnez l'identifiant du joueur: ");
+                scanf("%s", idRecherche);
+                returnId = RechercheId(idRecherche);
 
+                if (returnId == -1)
+                {
+                    printf("Aucun joueur avec ce identifiant.\n");
+                } else
+                {
+                    printf("1. Modifier le poste du %s\n", equipe[returnId].nom);
+                    printf("2. Modifier l'age du %s\n", equipe[returnId].nom);
+                    printf("3. Modifier le nombre de buts marqués par %s\n", equipe[returnId].nom);
+                    printf("0. Retourner au menu principale\n");
+
+                    printf("Donnez votre choix: ");
+                    scanf("%d", &choixModification);
+
+                    do
+                    {
+                        switch (choixModification)
+                        {
+                            case 1:
+                                printf("Donnez le nouveu poste du %s", equipe[returnId].nom);
+                                printf("1- Gardien\n");
+                                printf("2- Defenseur\n");
+                                printf("3- Milieu\n");
+                                printf("4- Attaquant\n");
+                                printf("0- Retourner\n");
+
+                                printf("Donnez votre choix: ");
+                                scanf("%d", &choixPoste);
+                                
+                                NouveauPoste(choixPoste, returnId);
+                                break;
+                            case 2:
+                                printf("Donnez le nouveau age du %s", equipe[returnId].nom);
+                                scanf("%d", &nouveauAge);
+                                equipe[returnId].age = nouveauAge;
+                                break;
+                            case 3:
+                                printf("Donnez le nouveau nombre du buts du %s", equipe[returnId].nom);
+                                scanf("%d", &nouveaubuts);
+                                equipe[returnId].buts = nouveaubuts;
+                                break;
+                            case 0:
+                                break;
+                            default:
+                                printf("Votre choix n'est pas valide!\n");
+                                break;
+                        }
+                    } while (choixModification != 0);  
+                }
                 break;
 
             case 4:
+                printf("Donnez l'identifiant du joueur: ");
+                scanf("%s", idRecherche);
+                returnId = RechercheId(idRecherche);
+
+                if (returnId == -1)
+                {
+                    printf("Aucun joueur avec ce identifiant.\n");
+                } else
+                {
+                    printf("Voulez vous supprimer %s %s\n", equipe[returnId].nom, equipe[returnId].prenom);
+                    printf("1. Oui\n 2. Non");
+                    scanf("%d", &confSupp);
+                    if (confSupp == 1)
+                    {
+                        Supprimer(returnId);
+                    } else
+                    {
+                        break;
+                    }
+                }
 
                 break;
 
@@ -475,7 +587,7 @@ int main(){
                 break;
 
             case 6:
-
+                
                 break;
             
             case 7:
