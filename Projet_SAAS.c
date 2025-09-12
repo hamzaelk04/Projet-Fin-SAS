@@ -39,7 +39,7 @@ joueur equipe[100] = {
 };
 
 int totalJoueur = 10;
-int compteurId = 10;
+int compteurId = 11;
 
 /*(Fonctions)___________________________________________________________________________________________*/
 
