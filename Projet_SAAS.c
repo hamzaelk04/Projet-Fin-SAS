@@ -271,7 +271,7 @@ void Afficher1Joueur(int i){
 
 // fonction de tri l'age
 void TrierAge(){
-    int i, j, key;
+    int i, j;
 
     for (i = 1; i < totalJoueur; i++)
     {
@@ -286,7 +286,6 @@ void TrierAge(){
         equipe[j + 1] = key;
     }
 }
-
 
 // fonction de tri les joueurs par alphabet
 void TrierAlphabet(){
@@ -309,7 +308,7 @@ void TrierAlphabet(){
 
 // fonction de tri par buts
 void TrierBut(){
-    int i, j, key;
+    int i, j;
 
     for (i = 1; i < totalJoueur; i++)
     {
@@ -366,6 +365,8 @@ void AffichagePoste(){
             Afficher1Joueur(i);
         }
     }
+
+   
 }
 
 // recherche par Id
@@ -461,7 +462,9 @@ int main(){
         printf("------------------------------------------------------------\n");
 
         printf("Donnez votre choix: ");
-        scanf("%d", &choix);
+        if(scanf("%d", &choix) == 0){
+            choix=7;
+        } while(getchar()!='\n');
 
         switch (choix)
         {
@@ -664,7 +667,7 @@ int main(){
                             sommeAge = sommeAge + equipe[i].age;
                         }
 
-                        moyenAge = sommeAge / totalJoueur;
+                        moyenAge = (float) sommeAge / totalJoueur;
 
                         printf("L'age moyen des joueurs est: %.1f", moyenAge);
                         break;
